@@ -39,14 +39,11 @@
     // Create a new BNRItem and add it to the store
     BNRItem *newItem = [[BNRItemStore defaultStore] createItem];
 
-    // Figure out where that item is in the array 
-    int lastRow = [[[BNRItemStore defaultStore] allItems] indexOfObject:newItem];
-        
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:lastRow inSection:0];
-
-    // Insert this new row into the table.
-    [[self tableView] insertRowsAtIndexPaths:[NSArray arrayWithObject:ip]
-                            withRowAnimation:UITableViewRowAnimationTop];
+    DetailViewController *detailViewController = [[DetailViewController alloc] initForNewItem:YES];
+    [detailViewController setItem:newItem];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    [self presentViewController:navController animated:YES completion:nil];
 }  
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -71,7 +68,7 @@
 - (void)tableView:(UITableView *)aTableView 
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DetailViewController *detailViewController = [[DetailViewController alloc] init];
+    DetailViewController *detailViewController = [[DetailViewController alloc] initForNewItem:NO];
     
     NSArray *items = [[BNRItemStore defaultStore] allItems];
     BNRItem *selectedItem = [items objectAtIndex:[indexPath row]];
