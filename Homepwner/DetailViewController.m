@@ -9,14 +9,26 @@
 #import "DetailViewController.h"
 #import "BNRItem.h"
 #import "BNRImageStore.h"
+#import "BNRItemStore.h"
 
 @implementation DetailViewController
 @synthesize item;
+@synthesize dismissBlock;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     @throw [NSException exceptionWithName:@"Wrong initializer" reason:@"Use initForNewItem:" userInfo:nil];
     
     return nil;
+}
+
+- (void)save:(id)sender {
+    [[ self presentingViewController] dismissViewControllerAnimated:YES completion:dismissBlock];
+}
+
+- (void)cancel:(id)sender {
+    [[BNRItemStore defaultStore] removeItem:item];
+    
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:dismissBlock];
 }
 
 - (id)initForNewItem:(BOOL)isNew
