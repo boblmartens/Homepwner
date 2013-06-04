@@ -10,4 +10,6 @@
 
 @implementation HomepwnerItemCell
 
+@synthesize nameLabel, thumbnailView, serialNumberLabel, valueLabel;
+
 @end
